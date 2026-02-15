@@ -81,6 +81,10 @@ $ macfig list dock
 
 Launch `macfig` without arguments for interactive mode — browse categories, toggle settings, and preview changes.
 
+## Claude Code
+
+Available as a skill in the [macos-toolkit](https://github.com/lu-zhengda/macos-toolkit) Claude Code plugin. Ask Claude "show hidden files" or "apply dev preset" and it runs macfig automatically.
+
 ## License
 
 [MIT](LICENSE)
