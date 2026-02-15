@@ -28,16 +28,20 @@ changelog:
       - "^test:"
       - "^chore:"
 
-brews:
+homebrew_casks:
   - repository:
       owner: lu-zhengda
       name: homebrew-tap
       token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
-    directory: Formula
+    directory: Casks
     homepage: "https://github.com/lu-zhengda/macfig"
     description: "macOS hidden defaults manager"
     license: "MIT"
-    install: |
-      bin.install "macfig"
-    test: |
-      system "#{bin}/macfig", "--version"
+    binaries:
+      - macfig
+    hooks:
+      post:
+        install: |
+          if OS.mac?
+            system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/macfig"]
+          end
