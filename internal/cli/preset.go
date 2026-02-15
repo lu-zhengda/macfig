@@ -26,16 +26,34 @@ Available presets:
 
 // presetDefinition maps preset names to their settings.
 type presetDefinition struct {
-	Name     string
-	Settings []presetEntry
+	Name     string        `json:"name"`
+	Settings []presetEntry `json:"settings"`
 }
 
 type presetEntry struct {
-	Domain  string
-	Key     string
-	Value   interface{}
-	Type    defaults.ValueType
-	Restart string
+	Domain  string             `json:"domain"`
+	Key     string             `json:"key"`
+	Value   interface{}        `json:"value"`
+	Type    defaults.ValueType `json:"type"`
+	Restart string             `json:"restart,omitempty"`
+}
+
+// presetApplyResult is the JSON representation of a preset apply result.
+type presetApplyResult struct {
+	Preset    string              `json:"preset"`
+	Applied   int                 `json:"applied"`
+	Failed    int                 `json:"failed"`
+	Restarted []string            `json:"restarted,omitempty"`
+	Results   []presetEntryResult `json:"results"`
+}
+
+// presetEntryResult is the JSON representation of a single preset entry result.
+type presetEntryResult struct {
+	Domain string      `json:"domain"`
+	Key    string      `json:"key"`
+	Value  interface{} `json:"value"`
+	OK     bool        `json:"ok"`
+	Error  string      `json:"error,omitempty"`
 }
 
 var presets = map[string]presetDefinition{
@@ -134,37 +152,72 @@ func runPreset(cmd *cobra.Command, args []string) error {
 	runner := &defaults.RealCmdRunner{}
 	exec := defaults.NewExecutor(runner)
 
-	fmt.Printf("Applying preset: %s\n\n", pd.Name)
-
 	restartNeeded := make(map[string]bool)
 	var applied, failed int
+	var results []presetEntryResult
 
 	for _, entry := range pd.Settings {
 		if err := exec.Write(entry.Domain, entry.Key, entry.Value, entry.Type); err != nil {
-			fmt.Printf("  FAIL  %s %s: %v\n", entry.Domain, entry.Key, err)
+			if !jsonFlag {
+				fmt.Printf("  FAIL  %s %s: %v\n", entry.Domain, entry.Key, err)
+			}
 			failed++
+			results = append(results, presetEntryResult{
+				Domain: entry.Domain,
+				Key:    entry.Key,
+				Value:  entry.Value,
+				OK:     false,
+				Error:  err.Error(),
+			})
 			continue
 		}
-		fmt.Printf("  OK    %s %s = %v\n", entry.Domain, entry.Key, entry.Value)
+		if !jsonFlag {
+			fmt.Printf("  OK    %s %s = %v\n", entry.Domain, entry.Key, entry.Value)
+		}
 		applied++
+		results = append(results, presetEntryResult{
+			Domain: entry.Domain,
+			Key:    entry.Key,
+			Value:  entry.Value,
+			OK:     true,
+		})
 		if entry.Restart != "" {
 			restartNeeded[entry.Restart] = true
 		}
 	}
 
 	// Restart all required processes.
+	var restarted []string
 	for proc := range restartNeeded {
 		if _, err := runner.Run(cmd.Context(), "killall", proc); err != nil {
-			fmt.Printf("\n  Warning: failed to restart %s: %v\n", proc, err)
+			if !jsonFlag {
+				fmt.Printf("\n  Warning: failed to restart %s: %v\n", proc, err)
+			}
 		} else {
-			fmt.Printf("\n  Restarted %s\n", proc)
+			if !jsonFlag {
+				fmt.Printf("\n  Restarted %s\n", proc)
+			}
+			restarted = append(restarted, proc)
 		}
 	}
 
-	fmt.Printf("\nApplied %d settings", applied)
-	if failed > 0 {
-		fmt.Printf(" (%d failed)", failed)
+	if jsonFlag {
+		return printJSON(presetApplyResult{
+			Preset:    name,
+			Applied:   applied,
+			Failed:    failed,
+			Restarted: restarted,
+			Results:   results,
+		})
 	}
-	fmt.Println()
+
+	if !jsonFlag {
+		fmt.Printf("\nApplying preset: %s\n", pd.Name)
+		fmt.Printf("Applied %d settings", applied)
+		if failed > 0 {
+			fmt.Printf(" (%d failed)", failed)
+		}
+		fmt.Println()
+	}
 	return nil
 }

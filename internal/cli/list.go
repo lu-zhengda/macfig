@@ -16,6 +16,23 @@ var listCmd = &cobra.Command{
 	RunE:  runList,
 }
 
+// categoryInfo is the JSON representation of a category summary.
+type categoryInfo struct {
+	Name     string `json:"name"`
+	Icon     string `json:"icon"`
+	Settings int    `json:"settings"`
+}
+
+// settingInfo is the JSON representation of a setting with its current value.
+type settingInfo struct {
+	Name        string      `json:"name"`
+	Description string      `json:"description"`
+	Domain      string      `json:"domain"`
+	Key         string      `json:"key"`
+	Current     string      `json:"current"`
+	Recommended interface{} `json:"recommended,omitempty"`
+}
+
 func runList(cmd *cobra.Command, args []string) error {
 	if len(args) == 0 {
 		return listCategories()
@@ -25,6 +42,19 @@ func runList(cmd *cobra.Command, args []string) error {
 
 func listCategories() error {
 	categories := preset.AllCategories()
+
+	if jsonFlag {
+		var items []categoryInfo
+		for _, cat := range categories {
+			items = append(items, categoryInfo{
+				Name:     cat.Name,
+				Icon:     cat.Icon,
+				Settings: len(cat.Settings),
+			})
+		}
+		return printJSON(items)
+	}
+
 	fmt.Println("Categories:")
 	fmt.Println()
 	for _, cat := range categories {
@@ -43,6 +73,25 @@ func listCategory(name string) error {
 
 	runner := &defaults.RealCmdRunner{}
 	exec := defaults.NewExecutor(runner)
+
+	if jsonFlag {
+		var items []settingInfo
+		for _, s := range cat.Settings {
+			current, err := exec.Read(s.Domain, s.Key)
+			if err != nil {
+				current = ""
+			}
+			items = append(items, settingInfo{
+				Name:        s.Name,
+				Description: s.Description,
+				Domain:      s.Domain,
+				Key:         s.Key,
+				Current:     current,
+				Recommended: s.Recommended,
+			})
+		}
+		return printJSON(items)
+	}
 
 	fmt.Printf("%s %s\n", cat.Icon, cat.Name)
 	fmt.Println()

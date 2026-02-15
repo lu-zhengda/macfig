@@ -14,6 +14,13 @@ var searchCmd = &cobra.Command{
 	RunE:  runSearch,
 }
 
+// searchOutput is the JSON representation of search results.
+type searchOutput struct {
+	Query   string                  `json:"query"`
+	Count   int                     `json:"count"`
+	Results []defaults.SearchResult `json:"results"`
+}
+
 func runSearch(cmd *cobra.Command, args []string) error {
 	query := args[0]
 
@@ -23,6 +30,14 @@ func runSearch(cmd *cobra.Command, args []string) error {
 	results, err := exec.Find(query)
 	if err != nil {
 		return err
+	}
+
+	if jsonFlag {
+		return printJSON(searchOutput{
+			Query:   query,
+			Count:   len(results),
+			Results: results,
+		})
 	}
 
 	if len(results) == 0 {

@@ -84,6 +84,11 @@ func Save(exec defaults.Executor, path string) error {
 	return nil
 }
 
+// TrackedSettings returns the list of all settings tracked by presets.
+func TrackedSettings() []preset.Setting {
+	return preset.AllSettings()
+}
+
 // Load reads a backup from a JSON file.
 func Load(path string) (*Backup, error) {
 	data, err := os.ReadFile(path)

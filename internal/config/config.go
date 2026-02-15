@@ -11,11 +11,11 @@ import (
 // Config holds macfig configuration.
 type Config struct {
 	// BackupDir is the directory where backups are stored.
-	BackupDir string `yaml:"backup_dir,omitempty"`
+	BackupDir string `yaml:"backup_dir,omitempty" json:"backup_dir,omitempty"`
 
 	// AutoRestart controls whether processes are automatically restarted
 	// after changing settings that require it.
-	AutoRestart bool `yaml:"auto_restart"`
+	AutoRestart bool `yaml:"auto_restart" json:"auto_restart"`
 }
 
 // DefaultPath returns the default config file path.
