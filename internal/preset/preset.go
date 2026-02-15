@@ -4,21 +4,21 @@ import "github.com/lu-zhengda/macfig/internal/defaults"
 
 // Setting represents a single macOS defaults setting.
 type Setting struct {
-	Name            string
-	Description     string
-	Domain          string
-	Key             string
-	Type            defaults.ValueType
-	Default         interface{}
-	Recommended     interface{}
-	RequiresRestart string // process to killall, empty if none
+	Name            string             `json:"name"`
+	Description     string             `json:"description"`
+	Domain          string             `json:"domain"`
+	Key             string             `json:"key"`
+	Type            defaults.ValueType `json:"type"`
+	Default         interface{}        `json:"default,omitempty"`
+	Recommended     interface{}        `json:"recommended,omitempty"`
+	RequiresRestart string             `json:"requires_restart,omitempty"`
 }
 
 // Category groups related settings together.
 type Category struct {
-	Name     string
-	Icon     string
-	Settings []Setting
+	Name     string    `json:"name"`
+	Icon     string    `json:"icon"`
+	Settings []Setting `json:"settings"`
 }
 
 // AllCategories returns every curated preset category.

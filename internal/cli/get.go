@@ -14,6 +14,13 @@ var getCmd = &cobra.Command{
 	RunE:  runGet,
 }
 
+// getResult is the JSON representation of a get result.
+type getResult struct {
+	Domain string `json:"domain"`
+	Key    string `json:"key"`
+	Value  string `json:"value"`
+}
+
 func runGet(cmd *cobra.Command, args []string) error {
 	domain, key := args[0], args[1]
 
@@ -23,6 +30,14 @@ func runGet(cmd *cobra.Command, args []string) error {
 	val, err := exec.Read(domain, key)
 	if err != nil {
 		return fmt.Errorf("failed to read %s %s: %w", domain, key, err)
+	}
+
+	if jsonFlag {
+		return printJSON(getResult{
+			Domain: domain,
+			Key:    key,
+			Value:  val,
+		})
 	}
 
 	fmt.Println(val)

@@ -49,6 +49,7 @@ func Execute() error {
 func init() {
 	rootCmd.SetVersionTemplate(fmt.Sprintf("macfig %s\n", version))
 	rootCmd.CompletionOptions.DisableDefaultCmd = true
+	rootCmd.PersistentFlags().BoolVar(&jsonFlag, "json", false, "Output in JSON format")
 	rootCmd.Flags().String("generate-completion", "", "Generate shell completion (bash, zsh, fish)")
 	rootCmd.Flags().MarkHidden("generate-completion")
 	rootCmd.AddCommand(listCmd)
@@ -59,4 +60,8 @@ func init() {
 	rootCmd.AddCommand(restoreCmd)
 	rootCmd.AddCommand(resetCmd)
 	rootCmd.AddCommand(searchCmd)
+	rootCmd.AddCommand(diffCmd)
+	rootCmd.AddCommand(exportCmd)
+	rootCmd.AddCommand(importCmd)
+	rootCmd.AddCommand(watchCmd)
 }

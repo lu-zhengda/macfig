@@ -12,7 +12,7 @@ const (
 
 // SearchResult represents a single match from `defaults find`.
 type SearchResult struct {
-	Domain string
-	Key    string
-	Value  string
+	Domain string `json:"domain"`
+	Key    string `json:"key"`
+	Value  string `json:"value"`
 }
