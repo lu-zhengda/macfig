@@ -16,20 +16,33 @@ brew install macfig
 ## Usage
 
 ```
+$ macfig list
+Categories:
+
+  🚢 Dock  (10 settings)
+  📁 Finder  (9 settings)
+  📷 Screenshots  (5 settings)
+  💻 Keyboard  (6 settings)
+  🤚 Trackpad  (3 settings)
+  🎬 Animations  (2 settings)
+  🔒 Privacy  (2 settings)
+  🔧 Misc  (4 settings)
+
+Use 'macfig list <category>' to view settings.
+
 $ macfig list dock
-DOMAIN               KEY                  VALUE     TYPE
-com.apple.dock       autohide             false     bool
-com.apple.dock       autohide-delay       0.5       float
-com.apple.dock       launchanim           true      bool
-com.apple.dock       mineffect            genie     string
-com.apple.dock       tilesize             48        int
+🚢 Dock
 
-$ macfig preset dev-setup
-Applied: faster dock, show hidden files, fast key repeat, no animations
-Restart Finder and Dock to apply changes? [Y/n]
-
-$ macfig search animation
-Found 12 keys matching "animation" across 5 domains
+  Auto-hide Dock                      0 -> recommended: true
+    Automatically hide and show the Dock  (com.apple.dock autohide)
+  Auto-hide delay                     0 -> recommended: 0
+    Delay before Dock auto-hides (seconds)  (com.apple.dock autohide-delay)
+  Auto-hide animation speed           0.2 -> recommended: 0.2
+    Speed of the Dock show/hide animation (seconds)  (com.apple.dock autohide-time-modifier)
+  Show recent apps                    0 -> recommended: false
+    Show recent applications in the Dock  (com.apple.dock show-recents)
+  Bounce animation                    0 -> recommended: false
+    Animate opening applications (bounce)  (com.apple.dock launchanim)
 ```
 
 ## Commands
