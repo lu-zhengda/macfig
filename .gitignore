@@ -4,6 +4,9 @@
 # GoReleaser
 dist/
 
+# Design plans (local only)
+docs/plans/
+
 # macOS
 .DS_Store
 
