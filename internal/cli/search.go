@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
-	"github.com/zhengda-lu/macfig/internal/defaults"
+	"github.com/lu-zhengda/macfig/internal/defaults"
 )
 
 var searchCmd = &cobra.Command{

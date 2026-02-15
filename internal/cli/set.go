@@ -5,8 +5,8 @@ import (
 	"strconv"
 
 	"github.com/spf13/cobra"
-	"github.com/zhengda-lu/macfig/internal/defaults"
-	"github.com/zhengda-lu/macfig/internal/preset"
+	"github.com/lu-zhengda/macfig/internal/defaults"
+	"github.com/lu-zhengda/macfig/internal/preset"
 )
 
 var setCmd = &cobra.Command{

@@ -1,6 +1,6 @@
 package preset
 
-import "github.com/zhengda-lu/macfig/internal/defaults"
+import "github.com/lu-zhengda/macfig/internal/defaults"
 
 // KeyboardCategory returns keyboard-related settings.
 func KeyboardCategory() Category {

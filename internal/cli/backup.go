@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
-	"github.com/zhengda-lu/macfig/internal/backup"
-	"github.com/zhengda-lu/macfig/internal/defaults"
+	"github.com/lu-zhengda/macfig/internal/backup"
+	"github.com/lu-zhengda/macfig/internal/defaults"
 )
 
 var backupCmd = &cobra.Command{

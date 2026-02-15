@@ -1,6 +1,6 @@
 package preset
 
-import "github.com/zhengda-lu/macfig/internal/defaults"
+import "github.com/lu-zhengda/macfig/internal/defaults"
 
 // AnimationsCategory returns animation-related settings.
 func AnimationsCategory() Category {

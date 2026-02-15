@@ -10,12 +10,14 @@ builds:
       - arm64
     ldflags:
       - -s -w
-      - -X github.com/zhengda-lu/macfig/internal/cli.version={{.Version}}
+      - -X github.com/lu-zhengda/macfig/internal/cli.version={{.Version}}
 
 archives:
   - formats:
       - tar.gz
     name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    files:
+      - completions/*
 
 checksum:
   name_template: "checksums.txt"
@@ -39,6 +41,10 @@ homebrew_casks:
     license: "MIT"
     binaries:
       - macfig
+    completions:
+      bash: completions/macfig.bash
+      zsh: completions/macfig.zsh
+      fish: completions/macfig.fish
     hooks:
       post:
         install: |

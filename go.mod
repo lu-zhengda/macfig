@@ -1,4 +1,4 @@
-module github.com/zhengda-lu/macfig
+module github.com/lu-zhengda/macfig
 
 go 1.25.0
 

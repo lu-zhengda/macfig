@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/zhengda-lu/macfig/internal/cli"
+	"github.com/lu-zhengda/macfig/internal/cli"
 )
 
 func main() {

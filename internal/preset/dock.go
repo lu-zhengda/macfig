@@ -1,6 +1,6 @@
 package preset
 
-import "github.com/zhengda-lu/macfig/internal/defaults"
+import "github.com/lu-zhengda/macfig/internal/defaults"
 
 // DockCategory returns Dock-related settings.
 func DockCategory() Category {

@@ -7,9 +7,9 @@ import (
 	"github.com/charmbracelet/bubbles/spinner"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/zhengda-lu/macfig/internal/backup"
-	"github.com/zhengda-lu/macfig/internal/defaults"
-	"github.com/zhengda-lu/macfig/internal/preset"
+	"github.com/lu-zhengda/macfig/internal/backup"
+	"github.com/lu-zhengda/macfig/internal/defaults"
+	"github.com/lu-zhengda/macfig/internal/preset"
 )
 
 // viewState represents the current TUI screen.

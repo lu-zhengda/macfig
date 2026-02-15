@@ -8,8 +8,8 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/zhengda-lu/macfig/internal/defaults"
-	"github.com/zhengda-lu/macfig/internal/preset"
+	"github.com/lu-zhengda/macfig/internal/defaults"
+	"github.com/lu-zhengda/macfig/internal/preset"
 )
 
 // Entry represents a single backed-up defaults value.
