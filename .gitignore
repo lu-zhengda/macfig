@@ -1,0 +1,8 @@
+# Binary (root only, not cmd/macfig/)
+/macfig
+
+# GoReleaser
+dist/
+
+# macOS
+.DS_Store

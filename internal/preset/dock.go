@@ -1,0 +1,113 @@
+package preset
+
+import "github.com/zhengda-lu/macfig/internal/defaults"
+
+// DockCategory returns Dock-related settings.
+func DockCategory() Category {
+	return Category{
+		Name: "Dock",
+		Icon: "\U0001F6A2", // ship emoji
+		Settings: []Setting{
+			{
+				Name:            "Auto-hide Dock",
+				Description:     "Automatically hide and show the Dock",
+				Domain:          "com.apple.dock",
+				Key:             "autohide",
+				Type:            defaults.TypeBool,
+				Default:         false,
+				Recommended:     true,
+				RequiresRestart: "Dock",
+			},
+			{
+				Name:            "Auto-hide delay",
+				Description:     "Delay before Dock auto-hides (seconds)",
+				Domain:          "com.apple.dock",
+				Key:             "autohide-delay",
+				Type:            defaults.TypeFloat,
+				Default:         0.5,
+				Recommended:     0.0,
+				RequiresRestart: "Dock",
+			},
+			{
+				Name:            "Auto-hide animation speed",
+				Description:     "Speed of the Dock show/hide animation (seconds)",
+				Domain:          "com.apple.dock",
+				Key:             "autohide-time-modifier",
+				Type:            defaults.TypeFloat,
+				Default:         0.5,
+				Recommended:     0.2,
+				RequiresRestart: "Dock",
+			},
+			{
+				Name:            "Minimize to application",
+				Description:     "Minimize windows into application icon",
+				Domain:          "com.apple.dock",
+				Key:             "minimize-to-application",
+				Type:            defaults.TypeBool,
+				Default:         false,
+				Recommended:     true,
+				RequiresRestart: "Dock",
+			},
+			{
+				Name:            "Show recent apps",
+				Description:     "Show recent applications in the Dock",
+				Domain:          "com.apple.dock",
+				Key:             "show-recents",
+				Type:            defaults.TypeBool,
+				Default:         true,
+				Recommended:     false,
+				RequiresRestart: "Dock",
+			},
+			{
+				Name:            "Static only",
+				Description:     "Show only open applications in the Dock",
+				Domain:          "com.apple.dock",
+				Key:             "static-only",
+				Type:            defaults.TypeBool,
+				Default:         false,
+				Recommended:     nil,
+				RequiresRestart: "Dock",
+			},
+			{
+				Name:            "Tile size",
+				Description:     "Size of Dock icons in pixels",
+				Domain:          "com.apple.dock",
+				Key:             "tilesize",
+				Type:            defaults.TypeInt,
+				Default:         48,
+				Recommended:     nil,
+				RequiresRestart: "Dock",
+			},
+			{
+				Name:            "Magnification",
+				Description:     "Enable Dock icon magnification on hover",
+				Domain:          "com.apple.dock",
+				Key:             "magnification",
+				Type:            defaults.TypeBool,
+				Default:         false,
+				Recommended:     nil,
+				RequiresRestart: "Dock",
+			},
+			{
+				Name:            "Minimize effect",
+				Description:     "Window minimize animation (genie or scale)",
+				Domain:          "com.apple.dock",
+				Key:             "mineffect",
+				Type:            defaults.TypeString,
+				Default:         "genie",
+				Recommended:     "scale",
+				RequiresRestart: "Dock",
+			},
+			{
+				Name:            "Bounce animation",
+				Description:     "Animate opening applications (bounce)",
+				Domain:          "com.apple.dock",
+				Key:             "launchanim",
+				Type:            defaults.TypeBool,
+				Default:         true,
+				Recommended:     false,
+				RequiresRestart: "Dock",
+			},
+		},
+	}
+}
