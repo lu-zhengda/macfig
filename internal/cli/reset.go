@@ -8,6 +8,14 @@ import (
 	"github.com/lu-zhengda/macfig/internal/preset"
 )
 
+// resetResult is the JSON representation of a reset operation result.
+type resetResult struct {
+	OK        bool   `json:"ok"`
+	Domain    string `json:"domain"`
+	Key       string `json:"key"`
+	Restarted string `json:"restarted,omitempty"`
+}
+
 var resetCmd = &cobra.Command{
 	Use:   "reset <domain> <key>",
 	Short: "Reset a defaults key to macOS default",
@@ -29,6 +37,15 @@ func runReset(cmd *cobra.Command, args []string) error {
 
 	if err := defaults.DeleteAndRestart(exec, runner, domain, key, restart); err != nil {
 		return err
+	}
+
+	if jsonFlag {
+		return printJSON(resetResult{
+			OK:        true,
+			Domain:    domain,
+			Key:       key,
+			Restarted: restart,
+		})
 	}
 
 	fmt.Printf("Reset %s %s to macOS default\n", domain, key)

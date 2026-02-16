@@ -8,6 +8,14 @@ import (
 	"github.com/lu-zhengda/macfig/internal/defaults"
 )
 
+// restoreResult is the JSON representation of a restore operation result.
+type restoreResult struct {
+	OK       bool   `json:"ok"`
+	Path     string `json:"path"`
+	Restored int    `json:"restored"`
+	Failed   int    `json:"failed"`
+}
+
 var restoreCmd = &cobra.Command{
 	Use:   "restore <file>",
 	Short: "Restore defaults from a backup file",
@@ -24,6 +32,15 @@ func runRestore(cmd *cobra.Command, args []string) error {
 	restored, failed, err := backup.Restore(exec, runner, path)
 	if err != nil {
 		return err
+	}
+
+	if jsonFlag {
+		return printJSON(restoreResult{
+			OK:       failed == 0,
+			Path:     path,
+			Restored: restored,
+			Failed:   failed,
+		})
 	}
 
 	fmt.Printf("Restored %d settings", restored)

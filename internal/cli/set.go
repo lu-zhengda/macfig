@@ -9,6 +9,15 @@ import (
 	"github.com/lu-zhengda/macfig/internal/preset"
 )
 
+// setResult is the JSON representation of a set operation result.
+type setResult struct {
+	OK        bool   `json:"ok"`
+	Domain    string `json:"domain"`
+	Key       string `json:"key"`
+	Value     string `json:"value"`
+	Restarted string `json:"restarted,omitempty"`
+}
+
 var setCmd = &cobra.Command{
 	Use:   "set <domain> <key> <value>",
 	Short: "Write a defaults value",
@@ -58,6 +67,16 @@ func runSet(cmd *cobra.Command, args []string) error {
 
 	if err := defaults.WriteAndRestart(exec, runner, domain, key, value, vt, restart); err != nil {
 		return err
+	}
+
+	if jsonFlag {
+		return printJSON(setResult{
+			OK:        true,
+			Domain:    domain,
+			Key:       key,
+			Value:     rawVal,
+			Restarted: restart,
+		})
 	}
 
 	fmt.Printf("Set %s %s = %v\n", domain, key, value)
